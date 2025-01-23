@@ -1,0 +1,39 @@
+table {
+    width: 100%;
+  }
+
+  .header {
+    padding: 5px;
+    display: flex;
+  }
+
+  .filter {
+    /*display: block;*/
+    width: 250px; 
+    margin-top: 3%;
+  }
+  
+  ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background: transparent !important;
+  }
+
+  .noDatacls{
+    margin: 10px;
+  }
+
+  .headerCls{
+    display: flex;
+  }
+
+  .onlineCls{
+    margin-top: 1%;
+    margin-left: 40%;
+    color: green;
+  }  
+
+  .actionBtnCls{
+    float: right;
+    display: flex;
+    margin-right: 5rem;
+    gap:10px;
+  }

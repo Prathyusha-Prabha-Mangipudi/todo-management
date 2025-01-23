@@ -1,0 +1,83 @@
+<div class="headerCls">
+  <button mat-raised-button (click)="openDialog()">Create Task
+    <mat-icon matPrefix>add</mat-icon>
+  </button>
+  <div class="onlineCls">● {{online_user_count}} Online</div>
+</div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Title Column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef> Task List
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <b>{{element.title}}</b> <br>
+      {{element.description}}
+    </td>
+  </ng-container>
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <b>Status : </b> {{element.status}}
+    </td>
+  </ng-container>
+
+  <!-- Priority Column -->
+  <ng-container matColumnDef="priority">
+    <th mat-header-cell *matHeaderCellDef>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <b>Priority : </b> {{element.priority}}
+    </td>
+  </ng-container>
+
+  <!-- Action Column -->
+  <ng-container matColumnDef="actions">
+    <th class="header" mat-header-cell *matHeaderCellDef>
+      <div class="filter">
+        <mat-form-field>
+          <input matInput placeholder="Search by Title" [(ngModel)]="filters.title"
+            (input)="applyFilters()" />
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="filter">
+        <mat-form-field>
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="filters.status" (selectionChange)="applyFilters()">
+            <mat-option *ngFor="let status of statusList" [value]="status.value">{{ status.uiValue }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="filter">
+        <mat-form-field>
+          <mat-label>Priority</mat-label>
+          <mat-select [(ngModel)]="filters.priority" (selectionChange)="applyFilters()">
+            <mat-option *ngFor="let priority of priorityList" [value]="priority.value">{{ priority.uiValue
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <div class="actionBtnCls">
+        <button mat-mini-fab matTooltip="Edit task" (click)="editTask(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab matTooltip="Delete task" (click)="deleteTask(element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSize]="pageSize" [length]="totalTaskCount" (page)="getTasksWithFilters($event)"
+  [pageSizeOptions]="[5, 10]">
+</mat-paginator>
+<div *ngIf="dataSource.data.length === 0" class="noDatacls">No task to display.</div>
